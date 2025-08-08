@@ -1,0 +1,132 @@
+{
+	"info": {
+		"_postman_id": "19f52975-427f-486f-b333-61ba001f2415",
+		"name": "API Tarefas",
+		"description": "API REST para gerenciamento de tarefas com Java + Spring Boot + MySQLEndFragment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43058130"
+	},
+	"item": [
+		{
+			"name": "Listar tarefas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/tarefas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tarefas"
+					]
+				},
+				"description": "### **Endpoint da API: Listar Tarefas**\n\n- **Método:** `GET`\n    \n- **Endpoint:** `http://localhost:8080/tarefas`\n    \n\n---\n\n### Objetivo\n\nEste endpoint é utilizado para listar todas as tarefas cadastradas no servidor.\n\nEle retorna uma coleção de objetos de tarefa, contendo os detalhes de cada uma.\n\n---\n\n### Parâmetros da Requisição\n\nEste é um método `GET`, portanto não exige parâmetros adicionais no corpo da requisição.\n\n---\n\n### Formato da Resposta\n\nAo realizar a requisição com sucesso, o servidor responderá com:\n\n- **Status:** `200 OK`\n    \n- **Content-Type:** `application/json`\n    \n\nO corpo da resposta será um array de objetos JSON, onde cada objeto representa uma tarefa com os seguintes campos:\n\n- `id`: (inteiro) Identificador único da tarefa.\n    \n- `nome`: (texto) Nome da tarefa.\n    \n- `dataEntrega`: (texto) Data de entrega da tarefa.\n    \n- `responsavel`: (texto) Pessoa responsável pela tarefa.\n    \n\n---\n\n### Exemplo de Resposta (JSON)\n\n``` json\n[\n  {\n    \"id\": 1,\n    \"nome\": \"Desenvolvimento da API\",\n    \"dataEntrega\": \"2025-12-12\",\n    \"responsavel\": \"Miguel\"\n  },\n  {\n    \"id\": 2,\n    \"nome\": \"Estudar Spring\",\n    \"dataEntrega\": \"2025-08-10\",\n    \"responsavel\": \"João\"\n  }\n]\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar tarefa por ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/tarefas/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tarefas",
+						"1"
+					]
+				},
+				"description": "### **Endpoint da API: Buscar Tarefa por ID**\n\n- **Método:** `GET`\n    \n- **Endpoint:** `http://localhost:8080/tarefas/{id}`\n    \n\n---\n\n### Objetivo\n\nEste endpoint é utilizado para recuperar os detalhes de uma tarefa específica a partir do seu identificador único (`id`).\n\nÉ útil para obter o estado atual e os dados completos de uma tarefa cadastrada no sistema.\n\n---\n\n### Parâmetros da Requisição\n\n- `id`: (parâmetro de caminho, obrigatório)\n    \n    O identificador único da tarefa que se deseja consultar.\n    \n\nExemplo de chamada:  \n`GET http://localhost:8080/tarefas/1`\n\n---\n\n### Formato da Resposta\n\nSe a requisição for bem-sucedida, o servidor responderá com:\n\n- **Status:** `200 OK`\n    \n- **Content-Type:** `application/json`\n    \n\nO corpo da resposta conterá um objeto JSON com os seguintes campos:\n\n- `id`: (inteiro) Identificador da tarefa.\n    \n- `nome`: (texto) Nome da tarefa.\n    \n- `dataEntrega`: (texto) Data de entrega da tarefa.\n    \n- `responsavel`: (texto) Pessoa responsável pela tarefa.\n    \n\n---\n\n### Exemplo de Resposta (JSON)\n\n``` json\n{\n  \"id\": 1,\n  \"nome\": \"Estudar Spring\",\n  \"dataEntrega\": \"2025-08-10\",\n  \"responsavel\": \"Miguel\"\n}\n\n ```\n\n---\n\n### Observações\n\n- Certifique-se de que o ID informado exista no banco de dados.\n    \n- Caso a tarefa não seja encontrada, o servidor pode retornar o status `404 Not Found`."
+			},
+			"response": []
+		},
+		{
+			"name": "Criar nova tarefa",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"Enviar email\",\r\n  \"responsavel\": \"Rafael\",\r\n  \"dataEntrega\": \"2025-08-10\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/tarefas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tarefas"
+					]
+				},
+				"description": "### Endpoint da API: Criar Nova Tarefa\n\n- **Método:** `POST`\n    \n- **Endpoint:** `http://localhost:8080/tarefas`\n    \n\n---\n\n### Objetivo\n\nEste endpoint permite criar uma nova tarefa no sistema.\n\nO cliente deve fornecer os dados da tarefa no corpo da requisição em formato JSON.\n\n---\n\n### Corpo da Requisição\n\nO corpo da requisição deve conter os seguintes campos obrigatórios:\n\n- `nome` (string): Nome da tarefa.\n    \n- `responsavel` (string): Pessoa responsável pela tarefa.\n    \n- `dataEntrega` (string): Data de entrega da tarefa no formato `YYYY-MM-DD`.\n    \n\n---\n\n### Resposta\n\nSe a tarefa for criada com sucesso, o servidor responderá com:\n\n- **Status:** `201 Created` (ou `200 OK`, dependendo da configuração do controlador)\n    \n- **Content-Type:** `application/json`\n    \n\nO corpo da resposta conterá os dados da tarefa criada, incluindo seu identificador único.\n\n---\n\n### Estrutura Esperada da Resposta\n\n- `id` (inteiro): Identificador único gerado para a tarefa.\n    \n- `nome` (string): Nome da tarefa.\n    \n- `responsavel` (string): Pessoa responsável pela tarefa.\n    \n- `dataEntrega` (string): Data de entrega da tarefa.\n    \n\n---\n\n### Exemplo de Resposta (JSON)\n\n``` json\n{\n    \"id\": 3,\n    \"nome\": \"Enviar email\",\n    \"dataEntrega\": \"2025-08-10\",\n    \"responsavel\": \"Rafael\"\n}\n\n ```\n\n---\n\n### Observações\n\n- Todos os campos do corpo da requisição são obrigatórios.\n    \n- Certifique-se de que a data esteja no formato `YYYY-MM-DD`.\n    \n- Utilize este endpoint para registrar novas tarefas que serão gerenciadas na aplicação."
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar tarefa",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"Estudar Spring\",\r\n  \"responsavel\": \"José\",\r\n  \"dataEntrega\": \"2025-08-10\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/tarefas/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tarefas",
+						"1"
+					]
+				},
+				"description": "### Endpoint da API: Atualizar Tarefa\n\n- **Método:** `PUT`\n    \n- **Endpoint:** `http://localhost:8080/tarefas/{id}`\n    \n\n---\n\n### Objetivo\n\nEste endpoint permite atualizar os dados de uma tarefa existente, identificada pelo seu ID.  \n  \nTodos os campos da tarefa devem ser informados novamente no corpo da requisição.\n\n---\n\n### Parâmetro de Caminho\n\n- `id` (inteiro): Identificador único da tarefa a ser atualizada. Deve ser informado diretamente na URL.\n    \n\n---\n\n### Corpo da Requisição\n\nA requisição deve estar em formato JSON, contendo os seguintes campos obrigatórios:\n\n- `nome` (string): Nome da tarefa.\n    \n- `responsavel` (string): Pessoa responsável pela tarefa.\n    \n- `dataEntrega` (string): Data de entrega da tarefa no formato `YYYY-MM-DD`.\n    \n\n---\n\n### Resposta\n\nSe a atualização for bem-sucedida, o servidor retornará:\n\n- **Status:** `200 OK`\n    \n- **Content-Type:** `application/json`\n    \n\nO corpo da resposta conterá os dados atualizados da tarefa.\n\n---\n\n### Estrutura Esperada da Resposta\n\n- `id` (inteiro): Identificador único da tarefa.\n    \n- `nome` (string): Nome atualizado da tarefa.\n    \n- `responsavel` (string): Responsável atualizado.\n    \n- `dataEntrega` (string): Nova data de entrega.\n    \n\n---\n\n### Exemplo de Resposta (JSON)\n\n``` json\n{\n  \"id\": 1,\n  \"nome\": \"Estudar Spring\",\n  \"responsavel\": \"José\",\n  \"dataEntrega\": \"2025-08-10\"\n}\n\n ```\n\n---\n\n### Observações\n\n- Substitua `{id}` na URL pelo ID real da tarefa que deseja atualizar.\n    \n- Todos os campos devem ser enviados, mesmo que apenas um seja alterado.\n    \n- A operação é **idempotente**: requisições repetidas com os mesmos dados terão o mesmo efeito da primeira."
+			},
+			"response": []
+		},
+		{
+			"name": "Deletar tarefa",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/tarefas/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tarefas",
+						"2"
+					]
+				},
+				"description": "### Endpoint da API: Deletar Tarefa\n\n**Método:** DELETE\n\n**Endpoint:**  \n`http://localhost:8080/tarefas/{id}`\n\n**Objetivo:**  \n  \nEste endpoint permite excluir uma tarefa existente, identificada pelo seu ID.\n\n**Parâmetro de Caminho:**\n\n- `id` (inteiro): Identificador único da tarefa que será deletada. Deve ser informado diretamente na URL.\n    \n\n**Corpo da Requisição:**  \n  \nNenhum corpo é necessário para esta requisição.\n\n**Resposta:**  \n  \nSe a exclusão for bem-sucedida, o servidor retornará:\n\n- **Status:** 200 OK\n    \n- **Content-Type:** `text/xml`\n    \n- O corpo da resposta estará em formato XML, mas não contém dados adicionais.\n    \n\n**Observações:**\n\n- Certifique-se de que o ID informado corresponde a uma tarefa existente no sistema.\n    \n- Caso o ID não exista, o servidor pode retornar um status de erro.\n    \n- A resposta não retorna nenhum dado além do status de sucesso."
+			},
+			"response": []
+		}
+	]
+}
