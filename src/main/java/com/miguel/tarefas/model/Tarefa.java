@@ -16,8 +16,6 @@ public class Tarefa {
 
     private String responsavel;
 
-    // Getters e Setters
-
     public Long getId() {
         return id;
     }
@@ -50,3 +48,4 @@ public class Tarefa {
         this.responsavel = responsavel;
     }
 }
+
